@@ -1,0 +1,56 @@
+
+fpath=(~/.awsume/zsh-autocomplete/ $fpath)
+. "$HOME/.cargo/env"
+
+alias hosts="cat ~/.ssh/config | ag Host --nocolor"
+alias term-colors="python ~/src/dev/tools/term-colors.py"
+alias po="poetry shell"
+alias awsh='f() { echo $keypass | pbcopy && aws-vault exec $1 };f'
+alias vim='nvim'
+alias get='f () {curl $1};f'
+alias themes='ls ~/.oh-my-zsh/themes/'
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias ffile='l -R | rg'
+alias whosthere='lsof -iTCP -sTCP:LISTEN'
+alias k='kubectl'
+alias p='prefect'
+alias konfig='kubectl config'
+alias murder='kill -9'
+alias tf='terraform'
+alias ipy='ipython'
+alias demo-time='source ~/src/demos/setup.sh'
+alias ghistory="git log --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%an%C(reset)%C(bold yellow)%d%C(reset) %C(dim white)- %s%C(reset)' --all"
+alias gconfig="gcloud config configurations"
+alias mamba="micromamba"
+alias pool="prefect work-pool"
+alias mact="mamba activate"
+alias mdeact="mamba deactivate"
+alias spy="sudo py-spy"
+alias pco="prefect cloud open"
+alias psw="prefect cloud workspace set"
+alias rgf="rg --files | rg"
+alias klog="k get pods -o jsonpath='{.items[0].metadata.name}' | xargs kubectl logs -f"
+alias composeupf="docker compose up --build -d --remove-orphans && docker compose logs -f" 
+alias ai='f() { marvin say -c "$@" }; f'
+alias pid2port='f() { lsof -nP -iTCP -sTCP:LISTEN | rg "$(ps aux | rg "$1" | awk '"'"'{print $2}'"'"' | paste -sd '"'"'|'"'"' -)"; }; f'
+
+alias t='tmux'
+alias m='mitmproxy'
+alias l='ls -lah'
+alias gpl='git pull'
+alias gst='git status'
+alias gsw='git switch'
+alias gco='git checkout'
+alias ga='git add'
+alias gcmsg='git commit -m'
+
+alias p='prefect'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+alias mern="echo 'User: $(whoami), Host: $(hostname), IP: '$(ifconfig | rg -o 'inet (\d{1,3}\.){3}\d{1,3}' | rg -v '127.0.0.1' | rg -v '255$' | rg -o '(\d{1,3}\.){3}\d{1,3}')"
+
+alias zed="open -a /Applications/Zed.app -n"
+alias cpc='copychat'
+alias gpfl='git push --force-with-lease'

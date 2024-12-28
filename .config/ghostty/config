@@ -1,0 +1,21 @@
+# theme = Violet Dark
+# theme = Cobalt2
+# theme = 3024 Night
+theme = UnderTheSea
+# theme = farmhouse-dark
+# theme = neobones_dark
+# theme = tokyonight
+background-opacity = 0.7
+background-blur-radius = 15
+
+# Minimal window style with transparent titlebar
+macos-titlebar-style = transparent
+
+# Don't confirm when closing with running processes
+confirm-close-surface = false
+
+# Optional: Enable shell integration to automatically skip confirmation at shell prompts
+shell-integration = zsh
+
+# Handle Ctrl+Enter
+keybind = ctrl+enter=text:
