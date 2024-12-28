@@ -1,0 +1,88 @@
+function gbre() {
+    local count=${1:-10}
+    local email=${2:-"thrast36@gmail.com"}
+    
+    for branch in $(git for-each-ref --sort=-committerdate refs/heads --format="%(refname:short)"); do
+        if git log -1 --author="$email" $branch > /dev/null; then
+            echo $branch
+        fi
+    done | head -n $count
+}
+
+git_exclude() {
+    echo "$1" >> .git/info/exclude
+}
+
+
+mv_ext() {
+  if [ "$#" -ne 3 ]; then
+    echo "Usage: mv_ext <dir> <from_ext> <to_ext>"
+    return 1
+  fi
+
+  local dir="$1"
+  local from_ext="$2"
+  local to_ext="$3"
+
+  if [ ! -d "$dir" ]; then
+    echo "Error: Directory '$dir' does not exist."
+    return 1
+  fi
+
+  find "$dir" -type f -name "*.$from_ext" -exec bash -c 'mv "$0" "${0%.$1}.$2"' {} "$from_ext" "$to_ext" \;
+
+  echo "Renamed all .$from_ext files to .$to_ext in $dir"
+}
+
+
+
+git_rebase_main() {
+    current_branch=$(git branch --show-current)
+    git checkout main
+    git pull origin main
+    git checkout "$current_branch"
+    git rebase main
+}
+
+
+
+find_err() {
+  local package=$1
+  local command=$2
+  local start_version=$3
+  local reverse=$4
+  
+  # Get and sort versions, using sort -u to remove duplicates
+  versions=($(pip index versions "$package" | rg -o '\d+\.\d+\.\d+' | sort -V -u))
+  if [[ "$reverse" == "reverse" ]]; then
+    versions=($(echo "${versions[@]}" | tr ' ' '\n' | sort -rV -u))
+  fi
+  
+  # Print header
+  echo "📦 Testing $package versions starting from $start_version"
+  echo "🔍 Command: $command"
+  echo "-------------------------------------------"
+  
+  local start=false
+  local last_working_version=""
+  
+  for version in "${versions[@]}"; do
+    if [[ "$version" == "$start_version" || "$start" == true ]]; then
+      start=true
+      printf "Testing v%-10s" "$version"
+      
+      # Run the command silently
+      if output=$(uv run --with "$package==$version" python -c "$command" 2>&1); then
+        echo " ✅"
+        last_working_version=$version
+      else
+        echo " ❌"
+        echo -e "\nFirst failing version: $version"
+        echo "Last working version: $last_working_version"
+        echo -e "\nError:"
+        echo "$output" | tail -n 3
+        break
+      fi
+    fi
+  done
+}
