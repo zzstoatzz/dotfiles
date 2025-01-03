@@ -1,0 +1,95 @@
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
+version = 3
+final_space = true
+
+[secondary_prompt]
+template = '፨ '
+foreground = '#B2A488'
+background = ''
+
+[transient_prompt]
+template = '» '
+foreground = ''
+background = ''
+foreground_templates = [
+  '{{if gt .Code 0}}#FF5555{{end}}',
+  '{{if eq .Code 0}}#8CA58C{{end}}',
+]
+
+[[blocks]]
+type = 'prompt'
+alignment = 'left'
+
+[[blocks.segments]]
+style = 'plain'
+template = '{{ if .Env.VIRTUAL_ENV }}π {{ dir .Env.VIRTUAL_ENV | base }} {{ if .Output }}{{ .Output }}{{ end }} ። {{ end }}'
+foreground = '#518141'
+background = ''
+type = 'command'
+[blocks.segments.properties]
+command = '[ -n "$VIRTUAL_ENV" ] && $VIRTUAL_ENV/bin/python --version | cut -d" " -f2 || true'
+shell = 'bash'
+
+[[blocks.segments]]
+style = 'plain'
+template = '{{ if .Full }} go {{ .Full }}{{ end }} '
+foreground = '#00ADD8'
+background = ''
+type = 'go'
+
+[[blocks.segments]]
+style = 'plain'
+template = '{{ .Path }}'
+foreground = '#bba8a6'
+background = ''
+type = 'path'
+
+[blocks.segments.properties]
+style = 'full'
+
+[[blocks.segments]]
+style = 'plain'
+template = ' {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <#D4AF37>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>'
+foreground = '#06e9f9'
+background = ''
+type = 'git'
+
+[blocks.segments.properties]
+branch_icon = ''
+commit_icon = '@'
+fetch_status = true
+
+[[blocks]]
+type = 'prompt'
+alignment = 'right'
+
+[[blocks.segments]]
+style = 'plain'
+template = '{{ .Output }}'
+foreground = '#bba8a6'
+background = ''
+type = 'command'
+
+[blocks.segments.properties]
+command = 'git log --pretty=format:%cr -1 || date +%H:%M:%S'
+fetch_timeout = 2000
+fetch_version = true
+responsive = true
+shell = 'bash'
+threshold = 0
+
+[[blocks]]
+type = 'prompt'
+alignment = 'left'
+newline = true
+
+[[blocks.segments]]
+style = 'plain'
+template = '»'
+foreground = ''
+background = ''
+type = 'text'
+foreground_templates = [
+  '{{if gt .Code 0}}#FF5555{{end}}',
+  '{{if eq .Code 0}}#cde8ec{{end}}',
+]

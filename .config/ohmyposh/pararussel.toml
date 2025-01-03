@@ -1,0 +1,65 @@
+# Schema definition
+schema = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
+
+# Version
+version = 2
+
+# Blocks
+[[blocks]]
+alignment = "left"
+type = "prompt"
+
+[[blocks.segments]]
+foreground = "#ffffff"
+style = "plain"
+template = "<#C591E8>❯</><#69FF94>❯</> "
+type = "text"
+
+[[blocks.segments]]
+foreground = "#56B6C2"
+style = "plain"
+template = "{{ .Path }} "
+type = "path"
+
+[blocks.segments.properties]
+style = "folder"
+
+[[blocks.segments]]
+foreground = "#D0666F"
+style = "plain"
+template = "<#5FAAE8>git:(</>{{ .HEAD }}<#5FAAE8>)</>"
+type = "git"
+
+[blocks.segments.properties]
+branch_icon = ""
+
+[[blocks.segments]]
+foreground = "#DCB977"
+style = "plain"
+template = " \uf119 "
+type = "status"
+
+[[blocks]]
+alignment = "right"
+type = "prompt"
+
+[[blocks.segments]]
+foreground = "#ffffff"
+style = "plain"
+template = " {{ .Output }} "
+type = "command"
+
+[blocks.segments.properties]
+command = "git log --pretty=format:%cr -1 || date +%H:%M:%S"
+shell = "bash"
+
+[[blocks]]
+alignment = "left"
+newline = true
+type = "prompt"
+
+[[blocks.segments]]
+foreground = "#ffffff"
+style = "plain"
+template = "» "
+type = "text"

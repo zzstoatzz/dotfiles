@@ -1,0 +1,86 @@
+#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+version = 2
+final_space = true
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
+
+[[blocks]]
+type = 'prompt'
+alignment = 'left'
+
+[[blocks.segments]]
+type = 'python'
+style = 'plain'
+foreground = '#518141'                                           # Fern green
+template = 'π {{ if .Venv }}{{ .Venv }} {{ .Full }} ። {{ end }}'
+
+[[blocks.segments]]
+type = 'go'
+style = 'plain'
+foreground = '#00ADD8'                               # Go blue
+template = '{{ if .Full }} go {{ .Full }}{{ end }} '
+
+[[blocks.segments]]
+type = 'path'
+style = 'plain'
+foreground = '#bba8a6'   # Silk
+template = '{{ .Path }}'
+
+[blocks.segments.properties]
+style = 'full'
+
+[[blocks.segments]]
+type = 'git'
+style = 'plain'
+foreground = '#06e9f9'                                                                                                                                         # Aqua
+template = ' {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <#D4AF37>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>'
+
+[blocks.segments.properties]
+branch_icon = ''
+commit_icon = '@'
+fetch_status = true
+
+
+[[blocks]]
+type = 'prompt'
+alignment = 'right'
+
+[[blocks.segments]]
+type = 'command'
+style = 'plain'
+foreground = '#bba8a6'     # Silk
+template = '{{ .Output }}'
+
+[blocks.segments.properties]
+command = "git log --pretty=format:%cr -1 || date +%H:%M:%S"
+shell = "bash"
+fetch_version = true
+fetch_timeout = 2000
+threshold = 0
+responsive = true
+
+
+[[blocks]]
+type = 'prompt'
+alignment = 'left'
+newline = true
+
+[[blocks.segments]]
+type = 'text'
+style = 'plain'
+foreground_templates = [
+  "{{if gt .Code 0}}#FF5555{{end}}", # Bright red for errors
+  "{{if eq .Code 0}}#cde8ec{{end}}", # Muted sage green for success
+]
+template = '»'
+
+[transient_prompt]
+foreground_templates = [
+  "{{if gt .Code 0}}#FF5555{{end}}", # Bright red for errors
+  "{{if eq .Code 0}}#8CA58C{{end}}", # Muted sage green for success
+]
+template = '» '
+
+[secondary_prompt]
+foreground = '#B2A488' # Muted tan
+template = '፨ '
